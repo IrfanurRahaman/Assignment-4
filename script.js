@@ -6,11 +6,12 @@ let rejectedList = [];
 let total = document.getElementById('total');
 let interview = document.getElementById('interview');
 let rejected = document.getElementById('rejected');
+const allCards = document.getElementById('allCards');
+
 
 let filterSection = document.getElementById('filtered-cards');
 
 
-const allCards = document.getElementById('allCards');
 function totalCount(){
     total.innerText = allCards.children.length;
     interview.innerText = interviewList.length;
@@ -40,12 +41,23 @@ function toggleBtn(id){
 
     selectedBtn.classList.remove('bg-gray-200', 'text-[#64748B]');
     selectedBtn.classList.add('bg-[#3B82F6]', 'text-white');
+
+    if(id == 'interviewFilterBtn'){
+        allCards.classList.add('hidden');
+        filterSection.classList.remove('hidden')
+    }
+    else{
+        allCards.classList.remove('hidden')
+        filterSection.classList.add('hidden')
+
+    }
 }
 
 // cards info manipulation
 let mainContainer = document.querySelector('main');
-
 mainContainer.addEventListener('click', function(event){
+
+    if(event.target.classList.contains('interview-btn')){
     const parentNode = event.target.parentNode.parentNode;  
     
     const jobTitle = parentNode.querySelector('.job-Title').innerText;
@@ -63,13 +75,17 @@ mainContainer.addEventListener('click', function(event){
     }    
 
     const existCheck = interviewList.find(item => item.jobTitle == cardInfo.jobTitle); 
-    
+    parentNode.querySelector('.status').innerText = 'APPLIED';
+
     if(!existCheck){
         interviewList.push(cardInfo);
     }    
     
     interviewAction();
+
+   }
 })
+
 
 function interviewAction(){
     filterSection.innerHTML = '';
@@ -85,7 +101,7 @@ function interviewAction(){
                     </div>
                     <p class="job-details text-[#64748B]">Remote • Full-time • $130,000 - $175,000</p>
 
-                    <p class="status w-[125px] bg-blue-100 px-3 py-2 text-[#002C5C] rounded-sm">NOT APPLIED</p>
+                    <p class="status w-[125px] bg-blue-100 px-3 py-2 text-[#002C5C] rounded-sm">APPLIED</p>
 
                     <p class="note text-[#64748B]">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
 
@@ -100,5 +116,7 @@ function interviewAction(){
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
         `
+        filterSection.appendChild(div);
+
     }
 }
