@@ -20,6 +20,8 @@ Step-2 ==> Create a child element
 
 Step-3 ==> Add text or html into the child element (innerText/innerHTML)
 
+
+
 Step-4 ==> Append the child element to the parent element
 
 
